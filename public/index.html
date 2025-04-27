@@ -7,42 +7,88 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            background-color: rgb(119, 119, 142);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        input, button {
-            margin: 5px;
-            padding: 10px;
+        .calculator {
+            background: #222;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px #000;
+            text-align: center;
+            width: 300px;
+        }
+        .calculator h1 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        label {
+            color: white;
             font-size: 16px;
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="number"], input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            background-color: #444;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #666;
         }
         #resultat {
-            margin-top: 10px;
-            font-size: 22px;
-            width: 30%;
+            background-color: black;
+            color: rgb(114, 126, 114);
             font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <h1>Calculatrice</h1>
+    <div class="calculator">
+        <h1>Calculatrice</h1>
 
-    <label for="input1">Premier nombre :</label>
-    <input type="number" id="input1" placeholder="Entrez un nombre" required>
+        <label for="input1">Premier nombre :</label>
+        <input type="number" id="input1" placeholder="Entrez un nombre" required>
 
-    <label for="input2">Deuxième nombre :</label>
-    <input type="number" id="input2" placeholder="Entrez un nombre" required>
+        <label for="input2">Deuxième nombre :</label>
+        <input type="number" id="input2" placeholder="Entrez un nombre" required>
 
-    <br><br>
+        <div class="buttons">
+            <button id="addition">Addition</button>
+            <button id="soustraction">Soustraction</button>
+            <button id="multiplication">Multiplication</button>
+            <button id="division">Division</button>
+        </div>
 
-    <button id="addition">Addition</button>
-    <button id="soustraction">Soustraction</button>
-    <button id="multiplication">Multiplication</button>
-    <button id="division">Division</button>
+        <label for="resultat">Résultat :</label>
+        <input type="text" id="resultat" disabled placeholder="">
 
-    <br><br>
-
-    <label for="resultat">Résultat :</label>
-    <input type="text" id="resultat" disabled placeholder="">
+    </div>
 
     <script>
         // Fonction de calcul
@@ -52,7 +98,7 @@
             const resultat = document.getElementById('resultat');
 
             if (isNaN(input1) || isNaN(input2)) {
-                resultat.value = 'Veuillez entrer des nombres valides.';
+                resultat.value = 'Entrez des nombres valides';
                 return;
             }
 
@@ -68,18 +114,15 @@
                     res = input1 * input2;
                     break;
                 case 'divide':
-                    if (input2 === 0) {
-                        res = 'Division par zéro non autorisée';
-                    } else {
-                        res = input1 / input2;
-                    }
+                    res = input2 !== 0 ? (input1 / input2) : 'Division par zéro impossible';
                     break;
                 default:
-                    res = 'Opération invalide';
+                    res = 'Erreur';
             }
             resultat.value = res;
         }
 
+        // Ajout des événements aux boutons
         document.getElementById('addition').addEventListener('click', () => calculate('add'));
         document.getElementById('soustraction').addEventListener('click', () => calculate('subtract'));
         document.getElementById('multiplication').addEventListener('click', () => calculate('multiply'));
@@ -88,4 +131,3 @@
 
 </body>
 </html>
-
